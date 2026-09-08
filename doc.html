@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Doctor Dashboard</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Doctor Dashboard</h1>
+
+        <table>
+
+            <tr>
+
+                <th>Patient ID</th>
+
+                <th>Name</th>
+
+                <th>Diagnosis</th>
+
+                <th>Discharge Date</th>
+
+                <th>Follow-up</th>
+
+                <th>Action</th>
+
+            </tr>
+
+
+            {% for patient in patients %}
+
+            <tr>
+
+                <td>
+                    {{ patient.patient_id }}
+                </td>
+
+                <td>
+                    {{ patient.name }}
+                </td>
+
+                <td>
+                    {{ patient.diagnosis }}
+                </td>
+
+                <td>
+                    {{ patient.discharge_date }}
+                </td>
+
+                <td>
+                    {{ patient.follow_up_date }}
+                </td>
+
+                <td>
+
+                    <a href="{% url 'patient_dashboard' patient.patient_id %}">
+                        View
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</body>
+
+</html>

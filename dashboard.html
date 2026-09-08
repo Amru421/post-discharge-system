@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Patient Dashboard</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Patient Dashboard</h1>
+
+        <div class="card">
+
+            <h2>{{ patient.name }}</h2>
+
+            <p>
+                Patient ID:
+                {{ patient.patient_id }}
+            </p>
+
+            <p>
+                Diagnosis:
+                {{ patient.diagnosis }}
+            </p>
+
+            <p>
+                Doctor:
+                {{ patient.treating_doctor }}
+            </p>
+
+            <p>
+                Discharge Date:
+                {{ patient.discharge_date }}
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Discharge Instructions</h2>
+
+            <p>
+                {{ patient.doctor_instructions }}
+            </p>
+
+            <h3>Diet</h3>
+
+            <p>
+                {{ patient.diet_instructions }}
+            </p>
+
+            <h3>Activity Restrictions</h3>
+
+            <p>
+                {{ patient.activity_restrictions }}
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Medications</h2>
+
+            {% for medicine in medications %}
+
+            <div>
+
+                <strong>
+                    {{ medicine.medicine_name }}
+                </strong>
+
+                <p>
+                    Dosage: {{ medicine.dosage }}
+                </p>
+
+                <p>
+                    Frequency: {{ medicine.frequency }}
+                </p>
+
+                <p>
+                    Duration: {{ medicine.duration }}
+                </p>
+
+            </div>
+
+            {% empty %}
+
+            <p>No medication records.</p>
+
+            {% endfor %}
+
+        </div>
+
+
+        <a class="button" href="{% url 'monitor_patient' patient.patient_id %}">
+
+            Enter Today's Health Data
+
+        </a>
+
+
+        <div class="card">
+
+            <h2>Recent Monitoring</h2>
+
+            {% for record in records %}
+
+            <hr>
+
+            <p>
+                Date: {{ record.created_at }}
+            </p>
+
+            <p>
+                Temperature:
+                {{ record.temperature }}
+            </p>
+
+            <p>
+                Heart Rate:
+                {{ record.heart_rate }}
+            </p>
+
+            <p>
+                Pain:
+                {{ record.pain_level }}
+            </p>
+
+            <p>
+                Risk:
+                <strong>
+                    {{ record.risk_level }}
+                </strong>
+            </p>
+
+            {% if record.emergency_alert %}
+
+            <div class="alert">
+
+                URGENT: Please contact your healthcare provider
+                or emergency medical services.
+
+            </div>
+
+            {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

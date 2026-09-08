@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Health Monitoring</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Post-Discharge Monitoring</h1>
+
+        <h2>
+            {{ patient.name }}
+        </h2>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit">
+                Analyze Health Status
+            </button>
+
+        </form>
+
+
+        {% if result %}
+
+        <div class="card">
+
+            <h2>AI Agent Analysis</h2>
+
+            <p>
+
+                Risk Level:
+
+                <strong>
+                    {{ result.risk.risk }}
+                </strong>
+
+            </p>
+
+            <p>
+
+                Reason:
+
+                {{ result.risk.reason }}
+
+            </p>
+
+
+            <h3>Monitoring Agent</h3>
+
+            {% for observation in result.monitoring.observations %}
+
+            <p>
+                • {{ observation }}
+            </p>
+
+            {% empty %}
+
+            <p>
+                No predefined concerning observations detected.
+            </p>
+
+            {% endfor %}
+
+
+            <h3>Medication Agent</h3>
+
+            <p>
+                {{ result.medication.status }}
+            </p>
+
+
+            <h3>Follow-Up Agent</h3>
+
+            <p>
+                {{ result.followup.message }}
+            </p>
+
+
+            {% if result.emergency.alert %}
+
+            <div class="alert">
+
+                {{ result.emergency.message }}
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
